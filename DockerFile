@@ -1,0 +1,21 @@
+FROM python:3.11-slim-buster
+
+WORKDIR /app
+
+COPY requirements.txt requirements.txt
+RUN apt-get update && apt-get install -y ffmpeg nginx && pip install -r requirements.txt
+
+# make the config folder
+RUN mkdir -p /config
+
+COPY . .
+
+# Remove the default Nginx configuration
+RUN rm /etc/nginx/sites-enabled/default
+
+# Copy the Nginx configuration file into the container
+COPY nginx.conf /etc/nginx/sites-enabled/
+
+EXPOSE 8000
+
+CMD service nginx start && gunicorn --bind 0.0.0.0:8000 main:app --config config/config.yml
