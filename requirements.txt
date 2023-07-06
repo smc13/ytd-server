@@ -13,4 +13,4 @@ PyYAML==6.0
 watchdog==3.0.0
 websockets==11.0
 Werkzeug==2.2.3
-yt-dlp==2023.3.4
+yt-dlp==2023.7.6
